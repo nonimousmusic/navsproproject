@@ -13,6 +13,7 @@ import { supabase } from "@/lib/supabase";
 
 const Roadmap = () => {
   const [goal, setGoal] = useState("");
+  const [targetState, setTargetState] = useState("");
   const [loading, setLoading] = useState(false);
   const [roadmapData, setRoadmapData] = useState<RoadmapData | null>(null);
   const [apiKey, setApiKey] = useState("");
@@ -82,6 +83,7 @@ const Roadmap = () => {
     const prompt = `
       You are an expert career counselor and educational consultant specifically tailored for students in India.
       The user is an Indian student who wants to achieve the following career goal: "${goal}".
+      ${targetState ? `The student resides in or wishes to study in the following state: "${targetState}". Therefore, when listing target colleges, universities, and state-level exams in the roadmap, strongly prioritize options that are located in, or highly relevant to, the state of "${targetState}".` : ""}
       
       Create a detailed, actionable, and structured roadmap for them to achieve this goal within the Indian education system.
       You MUST include specific guidance on:
@@ -89,6 +91,9 @@ const Roadmap = () => {
       2. Which national or state-level entrance exams they need to appear for (e.g., JEE, NEET, CUET, CLAT, CAT, UPSC, etc.).
       3. Key undergraduate degrees or certifications to pursue.
       4. Skills to develop and final action steps for career entry.
+      5. The minimum percentage of marks required in Class 10th, 12th, or graduation to be eligible for each major exam/college (if applicable).
+      6. A list of key target colleges/institutes or exams for each phase.
+      7. Timing of the entrance exams and when their application/registration forms are usually released.
 
       Return the response strictly as a valid JSON object matching this schema:
       {
@@ -102,7 +107,12 @@ const Roadmap = () => {
                 "title": "Step title",
                 "description": "Detailed description of what to do (e.g. choose PCM, take JEE Main)",
                 "duration": "Estimated time (e.g., '2 years', '6 months', 'Ongoing', optional)",
-                "type": "Must be exactly one of: 'academic', 'exam', 'skill', 'action'"
+                "type": "Must be exactly one of: 'academic', 'exam', 'skill', 'action'",
+                "eligibility_marks": "Minimum percentage or marks required for eligibility (e.g. 'Min 75% in 12th boards', optional)",
+                "colleges": ["List of target colleges/universities (optional)"],
+                "exams": ["List of relevant exams for this step (optional)"],
+                "exam_timing": "Month/period when the exam is conducted (e.g. 'Held in May', optional)",
+                "form_timing": "Month/period when application forms are released (e.g. 'Forms in Feb-March', optional)"
               }
             ]
           }
@@ -241,28 +251,41 @@ const Roadmap = () => {
                   </p>
                 </div>
 
-                <form onSubmit={generateRoadmap} className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
-                  <Input
-                    placeholder="e.g. Become a Machine Learning Engineer"
-                    className="h-12 text-base rounded-full px-6 bg-background shadow-inner"
-                    value={goal}
-                    onChange={(e) => setGoal(e.target.value)}
-                    disabled={loading}
-                  />
+                <form onSubmit={generateRoadmap} className="space-y-4 max-w-xl mx-auto w-full">
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <div className="flex-[2] w-full">
+                      <Input
+                        placeholder="e.g. Become a Machine Learning Engineer"
+                        className="h-12 text-base rounded-full px-6 bg-background shadow-inner w-full"
+                        value={goal}
+                        onChange={(e) => setGoal(e.target.value)}
+                        disabled={loading}
+                      />
+                    </div>
+                    <div className="flex-[1] w-full">
+                      <Input
+                        placeholder="State (Optional, e.g. Maharashtra)"
+                        className="h-12 text-base rounded-full px-6 bg-background shadow-inner w-full"
+                        value={targetState}
+                        onChange={(e) => setTargetState(e.target.value)}
+                        disabled={loading}
+                      />
+                    </div>
+                  </div>
                   <Button 
                     type="submit" 
-                    className="h-12 rounded-full px-8 shrink-0 shadow-md hover:shadow-lg transition-shadow"
+                    className="h-12 w-full rounded-full px-8 shadow-md hover:shadow-lg transition-shadow"
                     disabled={loading || !goal.trim()}
                   >
                     {loading ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Mapping...
+                        Mapping Path...
                       </>
                     ) : (
                       <>
                         <Sparkles className="mr-2 h-4 w-4" />
-                        Generate
+                        Generate Customized Roadmap
                       </>
                     )}
                   </Button>

@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { BookOpen, GraduationCap, Target, Zap, Clock, Download, Loader2 } from "lucide-react";
+import { BookOpen, GraduationCap, Target, Zap, Clock, Download, Loader2, Percent, School, Calendar, ClipboardList } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -10,6 +10,11 @@ export interface RoadmapStep {
   description: string;
   duration?: string;
   type: "academic" | "exam" | "skill" | "action";
+  eligibility_marks?: string;
+  colleges?: string[];
+  exams?: string[];
+  exam_timing?: string;
+  form_timing?: string;
 }
 
 export interface RoadmapPhase {
@@ -184,8 +189,73 @@ export const RoadmapDisplay = ({ data }: { data: RoadmapData }) => {
                               {step.description}
                             </p>
 
+                            {/* Admission & Eligibility Section */}
+                            {(step.eligibility_marks || (step.colleges && step.colleges.length > 0) || (step.exams && step.exams.length > 0) || step.exam_timing || step.form_timing) && (
+                              <div className="mt-4 pt-4 border-t border-slate-100/80 space-y-3">
+                                <h5 className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                                  Admission & Eligibility
+                                </h5>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                  {step.eligibility_marks && (
+                                    <div className="flex items-start gap-2 bg-amber-50/60 p-2.5 rounded-lg border border-amber-100">
+                                      <Percent className="w-3.5 h-3.5 text-amber-600 mt-0.5 shrink-0" />
+                                      <div>
+                                        <div className="text-[10px] font-bold text-amber-800 uppercase tracking-wide">Eligibility Marks</div>
+                                        <div className="text-xs text-amber-900 font-medium">{step.eligibility_marks}</div>
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {(step.exam_timing || step.form_timing) && (
+                                    <div className="flex items-start gap-2 bg-indigo-50/60 p-2.5 rounded-lg border border-indigo-100">
+                                      <Calendar className="w-3.5 h-3.5 text-indigo-600 mt-0.5 shrink-0" />
+                                      <div>
+                                        <div className="text-[10px] font-bold text-indigo-800 uppercase tracking-wide">Key Timeline</div>
+                                        <div className="space-y-0.5 text-xs text-indigo-900 font-medium">
+                                          {step.exam_timing && <div>Exam: {step.exam_timing}</div>}
+                                          {step.form_timing && <div className="text-[11px] text-indigo-700/90 font-normal">Forms: {step.form_timing}</div>}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {step.colleges && step.colleges.length > 0 && (
+                                    <div className="col-span-1 sm:col-span-2 flex items-start gap-2 bg-slate-50 p-2.5 rounded-lg border border-slate-200/60">
+                                      <School className="w-3.5 h-3.5 text-slate-600 mt-0.5 shrink-0" />
+                                      <div className="w-full">
+                                        <div className="text-[10px] font-bold text-slate-800 uppercase tracking-wide">Target Colleges & Institutes</div>
+                                        <div className="flex flex-wrap gap-1.5 mt-1.5">
+                                          {step.colleges.map((college, idx) => (
+                                            <span key={idx} className="text-xs bg-white text-slate-700 px-2 py-0.5 rounded border border-slate-200/80 font-medium shadow-sm">
+                                              {college}
+                                            </span>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {step.exams && step.exams.length > 0 && (
+                                    <div className="col-span-1 sm:col-span-2 flex items-start gap-2 bg-red-50/60 p-2.5 rounded-lg border border-red-100">
+                                      <BookOpen className="w-3.5 h-3.5 text-red-600 mt-0.5 shrink-0" />
+                                      <div className="w-full">
+                                        <div className="text-[10px] font-bold text-red-800 uppercase tracking-wide">Entrance Exams</div>
+                                        <div className="flex flex-wrap gap-1.5 mt-1.5">
+                                          {step.exams.map((exam, idx) => (
+                                            <span key={idx} className="text-xs bg-white text-red-700 px-2 py-0.5 rounded border border-red-200/80 font-medium shadow-sm">
+                                              {exam}
+                                            </span>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+
                             {step.duration && (
-                              <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500 bg-slate-100 w-fit px-2.5 py-1 rounded-md">
+                              <div className="mt-4 flex items-center gap-1.5 text-xs font-medium text-slate-500 bg-slate-100 w-fit px-2.5 py-1 rounded-md">
                                 <Clock className="w-3.5 h-3.5" />
                                 {step.duration}
                               </div>
