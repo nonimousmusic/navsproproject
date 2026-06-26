@@ -67,14 +67,9 @@ const Signup = () => {
         }
       }
 
-      // ── Step 1: Firebase — create account + send verification email ──────────
-      const firebaseCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(firebaseCredential.user, { displayName: name });
-      await sendEmailVerification(firebaseCredential.user);
-
-      // ── Step 2: Supabase — create a matching auth user ────────────────────────
-      // "Confirm email" is turned OFF in Supabase, so no duplicate email is sent.
-      // We get a Supabase UUID which we use for all data records.
+      // ── Step 1: Supabase — create auth user FIRST (prevents Firebase orphans) ─
+      // "Confirm email" is turned OFF in Supabase, so no email is sent.
+      // Creating Supabase first ensures password reset always works.
       const { data: sbData, error: sbError } = await supabase.auth.signUp({
         email,
         password,
@@ -83,15 +78,32 @@ const Signup = () => {
         },
       });
 
+      let supabaseUserId = sbData?.user?.id;
+
       if (sbError) {
-        // If user already exists in Supabase (e.g., re-registration attempt), that's fine
         if (!sbError.message.includes("already registered")) {
           throw sbError;
         }
+        // Retry scenario — previous attempt created Supabase user but failed later.
+        // Sign in to get the existing user's ID so we can still create a profile.
+        const { data: signInData } = await supabase.auth.signInWithPassword({ email, password });
+        if (signInData?.user?.id) {
+          supabaseUserId = signInData.user.id;
+        }
+      }
+
+      // ── Step 2: Firebase — create account + send verification email ──────────
+      try {
+        const firebaseCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(firebaseCredential.user, { displayName: name });
+        await sendEmailVerification(firebaseCredential.user);
+      } catch (firebaseError: any) {
+        // Firebase failed — sign out of Supabase so the retry can work cleanly
+        await supabase.auth.signOut();
+        throw firebaseError;
       }
 
       // ── Step 3: Supabase — create profile row using Supabase UUID ─────────────
-      const supabaseUserId = sbData?.user?.id;
       if (supabaseUserId) {
         await supabase.from("profiles").upsert({
           id: supabaseUserId,
