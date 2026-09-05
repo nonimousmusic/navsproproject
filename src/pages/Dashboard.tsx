@@ -29,7 +29,7 @@ const Dashboard = () => {
 
         if (assessmentData && assessmentData.answers) {
           const answeredCount = Object.keys(assessmentData.answers).length;
-          const percent = Math.min(100, (answeredCount / 90) * 100);
+          const percent = Math.min(100, (answeredCount / 75) * 100);
           setProgress(percent);
         }
 

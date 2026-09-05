@@ -311,11 +311,11 @@ export default function AdminDashboard() {
                   </div>
                   <div className="p-4 rounded-lg bg-muted/50 border">
                     <p className="text-sm text-muted-foreground">Assessment</p>
-                    <p className="font-semibold">{Object.keys(assessments[selectedProfile.id] || {}).length} / 90 Qs</p>
+                    <p className="font-semibold">{Object.keys(assessments[selectedProfile.id] || {}).length} / 75 Qs</p>
                   </div>
                   <div className="p-4 rounded-lg bg-muted/50 border">
                     <p className="text-sm text-muted-foreground">Progress</p>
-                    <p className="font-semibold">{Math.round(((Object.keys(assessments[selectedProfile.id] || {}).length) / 90) * 100)}%</p>
+                    <p className="font-semibold">{Math.round(((Object.keys(assessments[selectedProfile.id] || {}).length) / 75) * 100)}%</p>
                   </div>
                 </div>
 
@@ -332,7 +332,7 @@ export default function AdminDashboard() {
                   </div>
                 )}
 
-                {Object.keys(assessments[selectedProfile.id] || {}).length >= 90 ? (
+                {Object.keys(assessments[selectedProfile.id] || {}).length >= 75 ? (
                   <div className="mt-8 border-t pt-8">
                     <h3 className="text-xl font-semibold mb-4">Assessment Report</h3>
                     <div className="scale-[0.98] origin-top bg-muted/10 rounded-lg border p-2 overflow-y-auto max-h-[600px]">

@@ -24,157 +24,294 @@ export interface ReportData {
   assessmentDate: string;
   personalityTraits: PersonalityTrait[];
   coreMetrics: CoreMetric[];
-  aptitudeMetrics: DimensionScore[];
   interestAreas: InterestArea[];
+  allInterests: DimensionScore[];
+  aptitudeMetrics?: DimensionScore[];
   readinessScore: number;
   topStrengths: string[];
   growthAreas: string[];
   recommendedPaths: string[];
 }
 
-export const sampleReportData: ReportData = {
-  studentName: "Alex Johnson",
-  assessmentDate: "February 3, 2026",
-  personalityTraits: [
-    { trait: "Analytical", score: 85, description: "You approach problems methodically and enjoy finding logical solutions." },
-    { trait: "Creative", score: 72, description: "You bring fresh perspectives and enjoy thinking outside the box." },
-    { trait: "Social", score: 68, description: "You work well with others and value collaborative environments." },
-    { trait: "Leadership", score: 78, description: "You naturally guide others and take initiative in group settings." },
-    { trait: "Detail-Oriented", score: 81, description: "You notice the small things and value precision in your work." },
-    { trait: "Adaptable", score: 74, description: "You handle change well and stay flexible in new situations." },
-  ],
-  coreMetrics: [
-    { area: "GRIT & Perseverance", score: 88, level: "strength", insight: "You possess remarkable determination and stay focused on long-term goals." },
-    { area: "Lifestyle Readiness", score: 75, level: "developing", insight: "Solid basic habits, but some areas of your daily routine could be further optimized." }
-  ],
-  interestAreas: [
-    { name: "Technology & Innovation", score: 92, careers: ["Software Engineering", "Data Science", "Product Management"] },
-    { name: "Business & Strategy", score: 78, careers: ["Consulting", "Entrepreneurship", "Finance"] },
-    { name: "Science & Research", score: 71, careers: ["Research Analyst", "Biotechnology", "Environmental Science"] },
-  ],
-  readinessScore: 76,
-  topStrengths: [
-    "High perseverance toward goals",
-    "Natural leadership qualities with collaborative mindset",
-    "High attention to detail and precision",
-  ],
-  growthAreas: [
-    "Improving sleep and screen time habits",
-    "Building confidence in public speaking",
-    "Expanding creative expression techniques",
-  ],
-  recommendedPaths: [
-    "Technology & Engineering",
-    "Business Analytics",
-    "Research & Development",
-  ],
-  aptitudeMetrics: [
-    { name: "Logical Reasoning", score: 85, maxScore: 100, percentage: 85, band: "high" },
-    { name: "Numerical Ability", score: 78, maxScore: 100, percentage: 78, band: "high" },
-    { name: "Verbal Ability", score: 72, maxScore: 100, percentage: 72, band: "high" },
-    { name: "Spatial Reasoning", score: 65, maxScore: 100, percentage: 65, band: "moderate" },
-    { name: "Memory retention", score: 70, maxScore: 100, percentage: 70, band: "moderate" },
-    { name: "Problem-solving", score: 82, maxScore: 100, percentage: 82, band: "high" },
-  ],
-};
-
 export const CAREER_MAPPINGS: Record<string, string[]> = {
-  "Realistic (Hands-on)": ["Engineering", "Architecture", "Construction Management", "Forestry", "Piloting"],
-  "Investigative (Research)": ["Data Science", "Medicine", "Research Science", "Psychology", "Software Development"],
-  "Artistic (Creative)": ["Graphic Design", "Writing/Journalism", "Fine Arts", "Music/Performance", "Marketing"],
-  "Social (Helping)": ["Teaching", "Counseling", "Nursing", "Social Work", "Human Resources"],
-  "Enterprising (Leadership)": ["Business Management", "Sales/Marketing", "Law", "Politics", "Entrepreneurship"],
-  "Conventional (Organized)": ["Accounting", "Data Analysis", "Office Management", "Library Science", "Logistics"]
+  "Realistic (Hands-on)": [
+    "Mechanical / Electrical Engineering",
+    "Robotics & Automation",
+    "Architecture & Civil Engineering",
+    "Aviation & Piloting",
+    "Agricultural Technology",
+  ],
+  "Investigative (Research)": [
+    "Data Science & AI Research",
+    "Medical & Healthcare Sciences",
+    "Pure Sciences & Physics",
+    "Biotechnology & Genetics",
+    "Software Engineering",
+  ],
+  "Artistic (Creative)": [
+    "UI/UX & Product Design",
+    "Creative Writing & Media",
+    "Animation & Visual Effects",
+    "Architecture & Spatial Design",
+    "Digital Marketing & Brand Design",
+  ],
+  "Social (Helping)": [
+    "Teaching & Educational Leadership",
+    "Clinical Psychology & Counseling",
+    "Healthcare & Nursing",
+    "Public Policy & Community Service",
+    "Human Resource Management",
+  ],
+  "Enterprising (Leadership)": [
+    "Business Management & Strategy",
+    "Entrepreneurship & Venture Creation",
+    "Corporate Law & Legal Studies",
+    "International Relations",
+    "Financial Markets & Investment",
+  ],
+  "Conventional (Organized)": [
+    "Chartered Accountancy & Auditing",
+    "Data Operations & Analytics",
+    "Banking & Financial Compliance",
+    "Supply Chain & Logistics",
+    "Information Systems Administration",
+  ],
 };
 
 const getTraitDescription = (trait: string, band: string): string => {
   const descriptions: Record<string, string> = {
-    "Openness": band === "high" ? "You are highly curious, imaginative, and open to trying new things." : "You prefer familiar routines and practical, straightforward ideas.",
-    "Conscientiousness": band === "high" ? "You are highly organized, disciplined, and focused on your goals." : "You prefer a spontaneous and flexible approach rather than strict planning.",
-    "Extraversion": band === "high" ? "You thrive in social settings, draw energy from others, and speak up easily." : "You draw energy from quiet time, preferring deep, independent work.",
-    "Agreeableness": band === "high" ? "You are deeply cooperative, empathetic, and value team harmony." : "You are independent-minded and comfortable prioritizing logic over harmony.",
-    "Neuroticism": band === "high" ? "You experience stress deeply and may worry frequently." : "You are emotionally resilient and handle high-pressure situations calmly."
+    Openness:
+      band === "high"
+        ? "You are curious, imaginative, and enthusiastic about new ideas and creative thinking."
+        : "You prefer familiar, practical methods and thrive with established routines.",
+    Conscientiousness:
+      band === "high"
+        ? "You are organized, disciplined, plan work carefully, and follow through on commitments."
+        : "You prefer a flexible approach; developing structured planning will boost your consistency.",
+    Extraversion:
+      band === "high"
+        ? "You thrive in social settings, speak comfortably in groups, and enjoy collaborative initiatives."
+        : "You draw energy from quiet reflection and excel in independent, focused environments.",
+    Agreeableness:
+      band === "high"
+        ? "You are considerate, empathetic, work well with peers, and resolve disagreements peacefully."
+        : "You are independent-minded and objective, prioritizing logic and direct problem-solving.",
+    "Emotional Stability":
+      band === "high"
+        ? "You remain calm under pressure, recover quickly from setbacks, and manage emotions effectively."
+        : "You may feel stressed or unsettled during unexpected setbacks; emotional resilience practices will help.",
   };
-  return descriptions[trait] || "Trait description pending.";
+  return descriptions[trait] || "Trait evaluation based on Big Five psychometric framework.";
 };
 
 const getCoreInsight = (area: string, band: string): string => {
-  if (band === "high") return area === "GRIT & Perseverance" ? "Exceptional resilience and drive to achieve long-term goals." : "Excellent daily habits and routines that heavily support your success.";
-  if (band === "moderate") return area === "GRIT & Perseverance" ? "Good determination, though you may sometimes struggle when progress is slow." : "Decent daily routines with some room for optimizing sleep, diet, or screen time.";
-  return area === "GRIT & Perseverance" ? "You easily get distracted or discouraged. Building resilience will be key." : "Your daily lifestyle habits significantly hinder your potential and need urgent adjustment.";
+  if (area === "GRIT & Perseverance") {
+    if (band === "high") {
+      return "Exceptional resilience and commitment to long-term goals, persisting through difficult tasks.";
+    }
+    if (band === "moderate") {
+      return "Good dedication, though maintaining steady focus when results take time can be enhanced.";
+    }
+    return "May get easily discouraged by setbacks. Building patience and small consistent habits will unlock huge growth.";
+  }
+
+  // Lifestyle Readiness
+  if (band === "high") {
+    return "Strong lifestyle habits—regular sleep, controlled screen use, and balanced nutrition—that power sustained learning.";
+  }
+  if (band === "moderate") {
+    return "Balanced daily habits with specific opportunities to reduce late-night screen time and optimize study-rest balance.";
+  }
+  return "Inconsistent sleep or excessive screen distractions may be depleting focus and energy. Resetting daily routines is recommended.";
 };
 
+export const sampleReportData: ReportData = {
+  studentName: "Alex Johnson",
+  assessmentDate: "February 3, 2026",
+  personalityTraits: [
+    { trait: "Openness", score: 84, description: "You are curious, imaginative, and enthusiastic about new ideas and creative thinking." },
+    { trait: "Conscientiousness", score: 80, description: "You are organized, disciplined, plan work carefully, and follow through on commitments." },
+    { trait: "Extraversion", score: 68, description: "You thrive in social settings, speak comfortably in groups, and enjoy collaborative initiatives." },
+    { trait: "Agreeableness", score: 88, description: "You are considerate, empathetic, work well with peers, and resolve disagreements peacefully." },
+    { trait: "Emotional Stability", score: 76, description: "You remain calm under pressure, recover quickly from setbacks, and manage emotions effectively." },
+  ],
+  coreMetrics: [
+    { area: "GRIT & Perseverance", score: 85, level: "strength", insight: "Exceptional resilience and commitment to long-term goals, persisting through difficult tasks." },
+    { area: "Lifestyle Readiness", score: 75, level: "developing", insight: "Balanced daily habits with specific opportunities to reduce late-night screen time and optimize study-rest balance." },
+  ],
+  interestAreas: [
+    {
+      name: "Investigative (Research)",
+      score: 92,
+      careers: ["Data Science & AI Research", "Medical & Healthcare Sciences", "Software Engineering"],
+    },
+    {
+      name: "Enterprising (Leadership)",
+      score: 84,
+      careers: ["Business Management & Strategy", "Entrepreneurship & Venture Creation", "Corporate Law & Legal Studies"],
+    },
+    {
+      name: "Artistic (Creative)",
+      score: 76,
+      careers: ["UI/UX & Product Design", "Creative Writing & Media", "Animation & Visual Effects"],
+    },
+  ],
+  allInterests: [
+    { name: "Investigative (Research)", score: 23, maxScore: 25, percentage: 92, band: "high" },
+    { name: "Enterprising (Leadership)", score: 21, maxScore: 25, percentage: 84, band: "high" },
+    { name: "Artistic (Creative)", score: 19, maxScore: 25, percentage: 76, band: "high" },
+    { name: "Realistic (Hands-on)", score: 17, maxScore: 25, percentage: 68, band: "moderate" },
+    { name: "Social (Helping)", score: 16, maxScore: 25, percentage: 64, band: "moderate" },
+    { name: "Conventional (Organized)", score: 15, maxScore: 25, percentage: 60, band: "moderate" },
+  ],
+  readinessScore: 80,
+  topStrengths: [
+    "High perseverance toward long-term goals (Grit-S)",
+    "Strong analytical and investigative curiosity",
+    "High empathy and collaborative teamwork (Agreeableness)",
+    "Disciplined study and work ethic (Conscientiousness)",
+  ],
+  growthAreas: [
+    "Optimizing sleep schedule and limiting pre-bed screen time",
+    "Building stress buffering techniques during high-pressure exams",
+    "Cultivating routine consistency during slow-progress phases",
+  ],
+  recommendedPaths: [
+    "Data Science & AI Research",
+    "Business Management & Strategy",
+    "Software Engineering",
+    "UI/UX & Product Design",
+  ],
+  aptitudeMetrics: [],
+};
 
-export const transformResultsToReportData = (results: AssessmentResults, studentName: string): ReportData => {
-  const personalityTraits = results.personalitySummary.map(p => ({
+export const transformResultsToReportData = (
+  results: AssessmentResults,
+  studentName: string
+): ReportData => {
+  // 1. Personality Traits
+  const personalityTraits: PersonalityTrait[] = results.personalitySummary.map((p) => ({
     trait: p.name,
     score: Math.round(p.percentage),
-    description: getTraitDescription(p.name, p.band)
+    description: getTraitDescription(p.name, p.band),
   }));
 
+  // 2. Core Metrics (Grit & Lifestyle)
   const coreMetrics: CoreMetric[] = [];
   if (results.gritScore) {
     coreMetrics.push({
       area: results.gritScore.name,
       score: Math.round(results.gritScore.percentage),
-      level: results.gritScore.band === 'high' ? 'strength' : results.gritScore.band === 'moderate' ? 'developing' : 'growth',
-      insight: getCoreInsight(results.gritScore.name, results.gritScore.band)
+      level:
+        results.gritScore.band === "high"
+          ? "strength"
+          : results.gritScore.band === "moderate"
+          ? "developing"
+          : "growth",
+      insight: getCoreInsight(results.gritScore.name, results.gritScore.band),
     });
   }
   if (results.lifestyleScore) {
     coreMetrics.push({
       area: results.lifestyleScore.name,
       score: Math.round(results.lifestyleScore.percentage),
-      level: results.lifestyleScore.band === 'high' ? 'strength' : results.lifestyleScore.band === 'moderate' ? 'developing' : 'growth',
-      insight: getCoreInsight(results.lifestyleScore.name, results.lifestyleScore.band)
+      level:
+        results.lifestyleScore.band === "high"
+          ? "strength"
+          : results.lifestyleScore.band === "moderate"
+          ? "developing"
+          : "growth",
+      insight: getCoreInsight(results.lifestyleScore.name, results.lifestyleScore.band),
     });
   }
 
-
-  const interestAreas = results.topInterests.map(i => ({
+  // 3. Top Interest Areas (RIASEC)
+  const interestAreas = results.topInterests.map((i) => ({
     name: i.name,
     score: Math.round(i.percentage),
-    careers: CAREER_MAPPINGS[i.name] || []
+    careers: CAREER_MAPPINGS[i.name] || [],
   }));
 
-  const aptitudeMetrics = results.aptitudeScores;
-  
-  // Simple readiness score average of GRIT + Lifestyle
-  let rScore = 0;
-  if (results.gritScore && results.lifestyleScore) {
-    rScore = Math.round((results.gritScore.percentage + results.lifestyleScore.percentage) / 2);
-  } else {
-    rScore = 50;
+  // 4. Readiness Score
+  const readinessScore = results.readinessScore ?? 75;
+
+  // 5. Strengths
+  const topStrengths: string[] = [];
+  if (results.gritScore?.band === "high") {
+    topStrengths.push("High Perseverance & Goal Commitment (GRIT-S)");
   }
-  const readinessScore = rScore;
+  if (results.lifestyleScore?.band === "high") {
+    topStrengths.push("Healthy Daily Habits & Lifestyle Discipline");
+  }
 
-  const topStrengths = [
-    results.gritScore?.band === 'high' ? "Exceptional Perseverance (GRIT)" : null,
-    results.lifestyleScore?.band === 'high' ? "Strong Healthy Habits" : null,
-    ...personalityTraits.filter(p => p.score > 75).map(p => `Strong ${p.trait}`),
-  ].filter(Boolean) as string[];
+  personalityTraits
+    .filter((p) => p.score >= 70)
+    .forEach((p) => {
+      topStrengths.push(`Strong ${p.trait} (${p.score}%)`);
+    });
 
-  // Fill if empty
-  if (topStrengths.length === 0) topStrengths.push("Developing Capabilities");
+  if (results.topInterests.length > 0) {
+    topStrengths.push(`High Affinity for ${results.topInterests[0].name}`);
+  }
 
-  const growthAreas = [
-    results.gritScore?.band === 'low' ? "Building Long-term Resilience" : null,
-    results.lifestyleScore?.band === 'low' ? "Improving Daily Health Habits" : null,
-    ...personalityTraits.filter(p => p.score < 40).map(p => `Developing ${p.trait}`)
-  ].filter(Boolean) as string[];
+  if (topStrengths.length === 0) {
+    topStrengths.push("Developing Well-Rounded Potential", "Open to Learning & Growth");
+  }
 
-  const recommendedPaths = results.topInterests.flatMap(i => CAREER_MAPPINGS[i.name]?.slice(0, 2) || []);
+  // 6. Growth Areas
+  const growthAreas: string[] = [];
+  if (results.gritScore?.band === "low") {
+    growthAreas.push("Building Long-Term Resilience When Results Take Time");
+  }
+  if (results.lifestyleScore?.band === "low") {
+    growthAreas.push("Improving Sleep Hygiene and Managing Daily Screen Distractions");
+  }
+
+  personalityTraits
+    .filter((p) => p.score < 50)
+    .forEach((p) => {
+      if (p.trait === "Conscientiousness") {
+        growthAreas.push("Developing Structured Time Management & Planning");
+      } else if (p.trait === "Emotional Stability") {
+        growthAreas.push("Practicing Stress Recovery & Staying Calm Under Pressure");
+      } else if (p.trait === "Openness") {
+        growthAreas.push("Experimenting With New Approaches Beyond Familiar Routines");
+      } else if (p.trait === "Extraversion") {
+        growthAreas.push("Building Confidence in Public Discussions and Group Interaction");
+      } else if (p.trait === "Agreeableness") {
+        growthAreas.push("Enhancing Active Listening and Collaborative Problem Solving");
+      }
+    });
+
+  if (growthAreas.length === 0) {
+    growthAreas.push(
+      "Maintaining Consistent Habits During Exam Periods",
+      "Expanding Domain Exploration Across Emerging Career Fields"
+    );
+  }
+
+  // 7. Recommended Paths (from top interests)
+  const paths = results.topInterests.flatMap((i) => CAREER_MAPPINGS[i.name]?.slice(0, 2) || []);
+  const recommendedPaths = [...new Set(paths)].slice(0, 4);
 
   return {
     studentName,
-    assessmentDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+    assessmentDate: new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
     personalityTraits,
     coreMetrics,
-    aptitudeMetrics,
     interestAreas,
+    allInterests: results.allInterests || results.topInterests,
     readinessScore,
-    topStrengths: topStrengths.slice(0, 5),
+    topStrengths: topStrengths.slice(0, 4),
     growthAreas: growthAreas.slice(0, 3),
-    recommendedPaths: [...new Set(recommendedPaths)].slice(0, 4)
+    recommendedPaths:
+      recommendedPaths.length > 0
+        ? recommendedPaths
+        : ["Engineering & Technology", "Research & Analytics", "Creative Design & Media"],
+    aptitudeMetrics: [],
   };
 };

@@ -6,7 +6,7 @@ import { ReadinessRing } from "@/components/report/ReadinessRing";
 import { InterestCards } from "@/components/report/InterestCards";
 import { InsightsSummary } from "@/components/report/InsightsSummary";
 import { ReportExplanation } from "@/components/report/ReportExplanation";
-import { AptitudeBreakdown } from "@/components/report/AptitudeBreakdown";
+import { RiasecBreakdown } from "@/components/report/RiasecBreakdown";
 import { ReportData } from "@/data/reportData";
 import { PaymentButton } from "@/components/payment/PaymentButton";
 import { Button } from "@/components/ui/button";
@@ -35,13 +35,13 @@ export const ReportDisplay = ({ data, hideCTA = false }: ReportDisplayProps) => 
                 className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3"
               >
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                Personal Insights Report
+                Personal Career Discovery Report
               </motion.div>
               <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
                 Hello, {data.studentName}
               </h1>
               <p className="text-muted-foreground">
-                Your personalized career discovery insights
+                Your personalized 4-pillar career assessment insights (RIASEC, OCEAN, GRIT-S & Lifestyle Readiness)
               </p>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -54,24 +54,24 @@ export const ReportDisplay = ({ data, hideCTA = false }: ReportDisplayProps) => 
           <ReportExplanation />
         </motion.div>
 
-        {/* Charts grid */}
+        {/* Charts grid: OCEAN Personality & Core Readiness Indicators */}
         <div className="grid lg:grid-cols-2 gap-6 mb-10">
           <PersonalityRadar traits={data.personalityTraits} />
           <AptitudeChart areas={data.coreMetrics} />
         </div>
 
-        {/* Readiness and Interests */}
+        {/* Career Readiness Score & Top Interest Cards */}
         <div className="grid lg:grid-cols-2 gap-6 mb-10">
           <ReadinessRing score={data.readinessScore} />
           <InterestCards interests={data.interestAreas} />
         </div>
 
-        {/* Aptitude Breakdown */}
+        {/* Comprehensive RIASEC Interest Profile Breakdown */}
         <div className="mb-10">
-          <AptitudeBreakdown metrics={data.aptitudeMetrics} />
+          <RiasecBreakdown metrics={data.allInterests || []} />
         </div>
 
-        {/* Summary section */}
+        {/* Summary section: Strengths, Growth, Recommended paths */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -103,7 +103,7 @@ export const ReportDisplay = ({ data, hideCTA = false }: ReportDisplayProps) => 
               Ready to Take the Next Step?
             </h3>
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-              Connect with a mentor who can help you explore these paths and create an actionable plan.
+              Connect with an expert NAVSPRO mentor who can help you explore these career paths and create an actionable roadmap.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center" data-html2canvas-ignore="true">
               <PaymentButton amount={50000} description="Premium Career Assessment & Mentorship" />
@@ -121,7 +121,7 @@ export const ReportDisplay = ({ data, hideCTA = false }: ReportDisplayProps) => 
           transition={{ delay: 1.2 }}
           className="text-center text-xs text-muted-foreground mt-8 pb-8"
         >
-          This report is a guide for self-discovery, not a definitive assessment.
+          This report is a guide for self-discovery, not a definitive judgment.
           Your potential is unlimited, and this is just the beginning of your journey.
         </motion.p>
       </main>

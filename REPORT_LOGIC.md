@@ -2,55 +2,79 @@
 
 ## What is the Assessment?
 
-The assessment is a set of **90 simple statements**. For each one, you tell us how much it sounds like you — from *Strongly Disagree* to *Strongly Agree*. There are no right or wrong answers. The goal is to understand **who you are**, not to test what you know.
+The assessment is a set of **75 scientifically structured statements** based on internationally recognized psychological frameworks. For each statement, you indicate how accurately it reflects you — from *Strongly Disagree* (1) to *Strongly Agree* (5). There are no right or wrong answers; the assessment helps you understand **who you are** and where your natural strengths lie.
 
-The statements are grouped into 6 areas:
+The assessment is structured into 4 comprehensive pillars:
 
-1. **Your Interests** — What kind of activities and work environments excite you?
-2. **Your Natural Abilities** — What do you find easy and natural, like thinking logically, working with numbers, or communicating?
-3. **Your Personality** — How do you handle pressure, work with others, and approach new challenges?
-4. **Your Study Habits** — How consistent and disciplined are you with your learning?
-5. **Your Motivation** — How driven are you, and how do you deal with setbacks?
-6. **Your Situation** — What support do you have at home? Are you open to relocating or long-term preparation?
+1. **Section A — RIASEC Career Interest Assessment (Questions 1–30)**:
+   - Evaluates your preferences across John Holland's 6 career interest dimensions (5 questions each):
+     - **Realistic (R)**: Hands-on work, machinery, practical and outdoor tasks.
+     - **Investigative (I)**: Scientific inquiry, logical puzzles, data analysis, deep problem-solving.
+     - **Artistic (A)**: Creative writing, visual design, original ideas, self-expression.
+     - **Social (S)**: Helping others, mentoring, emotional support, community initiatives.
+     - **Enterprising (E)**: Leadership, persuasion, business initiatives, goal setting.
+     - **Conventional (C)**: System organization, detailed records, instructions, structured workflows.
+
+2. **Section B — Big Five Personality Profile (OCEAN) (Questions 31–55)**:
+   - Measures 5 foundational behavioral dimensions (5 questions each):
+     - **Openness (O)**: Curiosity, imagination, willingness to explore new methods.
+     - **Conscientiousness (C)**: Organization, punctuality, discipline, promise keeping.
+     - **Extraversion (E)**: Group interaction, public speaking, initiating conversations.
+     - **Agreeableness (A)**: Empathy, teamwork, peaceful conflict resolution.
+     - **Emotional Stability**: Composure under pressure, resilience after setbacks, emotional regulation.
+   - *Reverse Scoring*: Items 35, 40, 45, 50, and 55 are reverse-scored (`6 - answer`) to preserve measurement validity.
+
+3. **Section C — GRIT-S (Questions 56–63)**:
+   - Developed from Dr. Angela Duckworth's perseverance framework.
+   - Measures sustained passion and persistence toward long-term goals despite setbacks or slow progress.
+
+4. **Section D — Lifestyle Readiness Index (Questions 64–75)**:
+   - Evaluates daily foundational habits that directly power academic and personal performance:
+   - Sleep routine (7+ hours, waking refreshed), screen control (avoiding scrolling, night-time disconnect), healthy nutrition, regular exercise, positive stress handling, and study-rest balance.
 
 ---
 
 ## How Your Report is Calculated
 
-Once you finish all 90 questions, the system adds up your responses in each area and converts them into a **percentage score**. That score is then placed into one of three bands:
+Once you complete all 75 questions, the scoring engine calculates:
 
-| Band | Score Range | What it means |
-|------|-------------|---------------|
-| **Strength** | Above 70% | A natural inclination — this area comes easily to you |
-| **Developing** | 40–70% | You have ability here, and can grow further with guidance |
-| **Growth Area** | Below 40% | This area needs more focus or may not be your natural fit |
+1. **Percentage Scores**:
+   - `(Raw Score / Maximum Section Score) * 100`
+
+2. **Score Bands**:
+   | Band | Score Range | What it means |
+   |------|-------------|---------------|
+   | **Strength (High)** | ≥ 70% | A natural inclination and strength that comes easily |
+   | **Developing (Moderate)** | 40–69% | Solid baseline ability that expands further with guidance |
+   | **Growth Area (Low)** | < 40% | Requires targeted mentoring, habit building, or support |
+
+3. **Career Readiness Score**:
+   - A single composite index (0–100) combining **Grit-S** (determination) and the **Lifestyle Readiness Index** (daily energy & health habits).
 
 ---
 
 ## What Your Report Shows
 
-### 🧠 Personality Profile
-A chart showing how you score on six traits — things like how outgoing you are, how well you adapt to change, and how detail-oriented you are. This helps you understand your working style.
+### 🧠 Personality Profile (OCEAN)
+A 5-point radar chart plotting Openness, Conscientiousness, Extraversion, Agreeableness, and Emotional Stability, paired with descriptive insights into your working and collaboration style.
 
-### 📊 Natural Abilities
-A breakdown of areas like logical thinking, verbal communication, and problem-solving — showing where your natural strengths lie and where there's room to grow.
+### 📊 Core Readiness Indicators
+A visual comparison of your **GRIT & Perseverance** and **Lifestyle Readiness Index**, showing strengths and specific daily routine opportunities.
 
 ### 🎯 Career Readiness Score
-A single number (out of 100) based on your study discipline and motivation. It reflects how prepared you are — not in terms of knowledge, but in terms of habits and mindset — to pursue your goals.
+A circular readiness gauge highlighting your current holistic readiness level: *Excellent*, *Good*, *Developing*, or *Early Stage*.
 
-### 💼 Career Interest Areas
-Based on the activities and topics you said you're drawn to, the report highlights the career fields that are most likely to be a good fit for you — such as Technology, Healthcare, Business, Creative Arts, and more.
+### 💡 Top Interest Areas & Matched Careers
+Your top RIASEC interest clusters with tailored career suggestions spanning technology, business, scientific research, design, education, and finance.
 
-### ✅ Your Strengths & Growth Areas
-A short, plain-language summary of what you're naturally good at and which areas could benefit from more focus or mentoring.
+### 🧭 RIASEC Interest Profile Breakdown
+A comprehensive view comparing all 6 RIASEC scores side-by-side.
 
-### 🚀 Recommended Career Paths
-Specific career suggestions that match your interests and strengths. These are starting points for exploration — not a final verdict on your future.
+### ✨ What This Means For You
+Tailored takeaways summarizing your top individual strengths, recommended areas to develop, and high-alignment career directions.
 
 ---
 
 ## Important to Know
 
-> This report is a **guide for self-discovery**, not a definitive judgment. Your potential is unlimited. The assessment captures a snapshot of who you are today, and that picture will grow and change as you do.
-
-The report is personalized entirely to your answers. Two people with different responses will get a completely different report — there is no template or generic result.
+> This report is a **guide for self-discovery**, not a rigid judgment. Students evolve through exposure, practice, and mentorship. Your potential is limitless.

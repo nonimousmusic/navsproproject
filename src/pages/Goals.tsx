@@ -8,7 +8,7 @@ const goalsData = [
     {
         id: 1,
         title: "Complete Career Assessment",
-        description: "Finish all 90 questions to unlock your personalized report.",
+        description: "Finish all 75 questions to unlock your personalized report.",
         progress: 0,
         status: "in-progress",
         due: "This week",

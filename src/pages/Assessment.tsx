@@ -230,7 +230,7 @@ const Assessment = () => {
             transition={{ delay: 0.4 }}
             className="text-muted-foreground mb-8"
           >
-            Thank you for completing the 90-question career assessment. Your personalized insights are being prepared.
+            Thank you for completing the {totalQuestions}-question career assessment. Your personalized insights are being prepared.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
