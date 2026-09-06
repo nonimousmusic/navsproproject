@@ -39,11 +39,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         // Get the initial session
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            setSession(session);
-            setUser(mapSupabaseUser(session?.user ?? null));
-            setLoading(false);
-        });
+        supabase.auth.getSession()
+            .then(({ data }) => {
+                const session = data?.session ?? null;
+                setSession(session);
+                setUser(mapSupabaseUser(session?.user ?? null));
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error("Error retrieving Supabase session:", err);
+                setSession(null);
+                setUser(null);
+                setLoading(false);
+            });
 
         // Listen for auth state changes (login, logout, token refresh)
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
