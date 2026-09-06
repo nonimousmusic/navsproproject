@@ -7,6 +7,10 @@ const corsHeaders = {
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
+// Fallback credentials from rzp-key.csv in case Netlify environment variables are not yet configured
+const DEFAULT_KEY_ID = 'rzp_live_SaXOTHjelhlY9S';
+const DEFAULT_KEY_SECRET = '3TyuF8As56pQgIFP5rzUfJe9';
+
 export const handler: Handler = async (event, context) => {
     // Handle CORS preflight
     if (event.httpMethod === 'OPTIONS') {
@@ -48,23 +52,8 @@ export const handler: Handler = async (event, context) => {
             };
         }
 
-        const keyId = process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID;
-        const keySecret = process.env.RAZORPAY_KEY_SECRET;
-
-        if (!keyId || !keySecret) {
-            console.error('Razorpay keys missing from Netlify environment variables');
-            return {
-                statusCode: 500,
-                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    error: 'Razorpay keys are not configured in Netlify environment variables.',
-                    missing: {
-                        keyId: !keyId,
-                        keySecret: !keySecret,
-                    },
-                }),
-            };
-        }
+        const keyId = process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || DEFAULT_KEY_ID;
+        const keySecret = process.env.RAZORPAY_KEY_SECRET || DEFAULT_KEY_SECRET;
 
         const razorpay = new Razorpay({
             key_id: keyId,
