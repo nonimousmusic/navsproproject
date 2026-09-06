@@ -6,9 +6,9 @@ interface ProgressSnapshotProps {
 }
 
 export function ProgressSnapshot({ progressPercentage }: ProgressSnapshotProps) {
-  // Convert 100% based progress to 90 questions count
-  const completedCount = Math.round((progressPercentage / 100) * 90);
-  const remaining = 90 - completedCount;
+  // Convert 100% based progress to 75 questions count
+  const completedCount = Math.round((progressPercentage / 100) * 75);
+  const remaining = 75 - completedCount;
 
   const stats = [
     {
@@ -21,7 +21,7 @@ export function ProgressSnapshot({ progressPercentage }: ProgressSnapshotProps) 
     },
     {
       label: "Assessments Done",
-      value: `${completedCount}/90`,
+      value: `${completedCount}/75`,
       change: `${remaining} left`,
       trend: "neutral",
       icon: CheckCircle2,
