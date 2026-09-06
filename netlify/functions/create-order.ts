@@ -1,48 +1,104 @@
 import { Handler } from '@netlify/functions';
 import Razorpay from 'razorpay';
 
+const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+};
+
 export const handler: Handler = async (event, context) => {
+    // Handle CORS preflight
+    if (event.httpMethod === 'OPTIONS') {
+        return {
+            statusCode: 200,
+            headers: corsHeaders,
+            body: '',
+        };
+    }
+
     // Only allow POST requests
     if (event.httpMethod !== 'POST') {
-        return { statusCode: 405, body: 'Method Not Allowed' };
+        return {
+            statusCode: 405,
+            headers: corsHeaders,
+            body: JSON.stringify({ error: 'Method Not Allowed' }),
+        };
     }
 
     try {
-        const { amount, currency, userId } = JSON.parse(event.body || '{}');
-
-        if (!amount || !currency || !userId) {
+        let body: any = {};
+        try {
+            body = event.body ? JSON.parse(event.body) : {};
+        } catch {
             return {
                 statusCode: 400,
-                body: JSON.stringify({ error: 'Missing amount, currency, or userId' }),
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ error: 'Invalid JSON body' }),
+            };
+        }
+
+        const { amount, currency = 'INR', userId } = body;
+
+        if (!amount || !userId) {
+            return {
+                statusCode: 400,
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ error: 'Missing amount or userId in request' }),
+            };
+        }
+
+        const keyId = process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID;
+        const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+        if (!keyId || !keySecret) {
+            console.error('Razorpay keys missing from Netlify environment variables');
+            return {
+                statusCode: 500,
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    error: 'Razorpay keys are not configured in Netlify environment variables.',
+                    missing: {
+                        keyId: !keyId,
+                        keySecret: !keySecret,
+                    },
+                }),
             };
         }
 
         const razorpay = new Razorpay({
-            key_id: process.env.VITE_RAZORPAY_KEY_ID || '',
-            key_secret: process.env.RAZORPAY_KEY_SECRET || '',
+            key_id: keyId,
+            key_secret: keySecret,
         });
 
         const options = {
-            amount: amount, // amount in smallest currency unit
+            amount: Number(amount), // in smallest currency unit (paise)
             currency: currency,
-            receipt: `receipt_order_${Date.now()}`,
+            receipt: `rcpt_${Date.now()}`,
             notes: {
-                userId: userId, // Embed critical tracking data in Razorpay
-            }
+                userId: String(userId),
+            },
         };
 
         const order = await razorpay.orders.create(options);
 
         return {
             statusCode: 200,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(order),
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                ...order,
+                key_id: keyId,
+            }),
         };
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error creating order:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Failed to create order' }),
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                error: 'Failed to create order',
+                details: error?.error?.description || error?.message || String(error),
+            }),
         };
     }
 };
