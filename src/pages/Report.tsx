@@ -5,7 +5,6 @@ import { ArrowLeft, Download, Calendar, Loader2, BookOpen, ArrowRight } from "lu
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ReportDisplay } from "@/components/report/ReportDisplay";
-import { sampleReportData } from "@/data/reportData";
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
 import { supabase } from "@/lib/supabase";
@@ -111,8 +110,7 @@ const Report = () => {
     );
   }
 
-  const defaultName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || "Student";
-  const data = reportData || { ...sampleReportData, studentName: defaultName }; // Fallback to sample for dev/preview if no data found
+  const data = reportData;
 
   const handleDownloadPDF = async () => {
     if (!reportRef.current) return;
