@@ -8,7 +8,6 @@ import { ArrowRight, GraduationCap } from "lucide-react";
 const stats = [
   { value: "10,000+", label: "Students Guided" },
   { value: "200+", label: "Partner Schools" },
-  { value: "95%", label: "Satisfaction Rate" },
 ];
 
 export const HeroSection = () => {
