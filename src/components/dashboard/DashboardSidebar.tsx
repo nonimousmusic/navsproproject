@@ -32,7 +32,6 @@ import { useAuth } from "@/context/AuthContext";
 const mainNavItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "Assessments", url: "/assessment", icon: BookOpen },
-  { title: "Goals", url: "/goals", icon: Target },
   { title: "Roadmap", url: "/roadmap", icon: Map },
   { title: "Reports", url: "/report", icon: BarChart3 },
 ];

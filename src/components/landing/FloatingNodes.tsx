@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { Sparkles, Brain, Heart, Target, Compass, Lightbulb } from "lucide-react";
+import { Sparkles, Brain, Heart, TrendingUp, Compass, Lightbulb } from "lucide-react";
 
 const nodes = [
   { icon: Brain, label: "Aptitude", delay: 0, x: -180, y: -100, size: "lg" },
   { icon: Heart, label: "Interests", delay: 0.2, x: 200, y: -80, size: "md" },
   { icon: Sparkles, label: "Skills", delay: 0.4, x: -160, y: 90, size: "md" },
-  { icon: Target, label: "Goals", delay: 0.6, x: 190, y: 110, size: "lg" },
+  { icon: TrendingUp, label: "Growth", delay: 0.6, x: 190, y: 110, size: "lg" },
   { icon: Compass, label: "Direction", delay: 0.8, x: -240, y: 0, size: "sm" },
   { icon: Lightbulb, label: "Potential", delay: 1, x: 260, y: -10, size: "sm" },
 ];
